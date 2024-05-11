@@ -3,7 +3,7 @@ import { AppContext } from "./App_Context";
 import axios from "axios";
 
 const App_State = (props) => {
-  const url = "http://localhost:3000/api";
+  const url = "https://recipe-server-sqbv.onrender.com/api";
   const [token, setToken] = useState("");
   const [recipe, setrecipe] = useState([]);
   const [savedRecipe, setsavedRecipe] = useState([]);
@@ -28,21 +28,20 @@ const App_State = (props) => {
     getSavedRecipeById();
     profile();
     recipeByUser(userId);
-    
-  }, [token,userId,reload]);
+
+  }, [token, userId, reload]);
 
   useEffect(() => {
-  if(token){
-    localStorage.setItem("token",token)
-  }
-  const tokenFromLocalStorage = localStorage.getItem("token",token)
-  if(tokenFromLocalStorage)
-  {
-    setToken(tokenFromLocalStorage);
-    setisAuthenticated(true)
-  }
-  }, [token,reload])
-  
+    if (token) {
+      localStorage.setItem("token", token)
+    }
+    const tokenFromLocalStorage = localStorage.getItem("token", token)
+    if (tokenFromLocalStorage) {
+      setToken(tokenFromLocalStorage);
+      setisAuthenticated(true)
+    }
+  }, [token, reload])
+
 
   // register
   const register = async (name, gmail, password) => {
@@ -117,7 +116,7 @@ const App_State = (props) => {
         withCredentials: true,
       }
     );
-setreload(!reload)
+    setreload(!reload)
     return api;
   };
 
@@ -168,11 +167,11 @@ setreload(!reload)
   };
 
   // profile
-  const profile = async () =>{
+  const profile = async () => {
     const api = await axios.get(`${url}/user`, {
       headers: {
         "Content-Type": "application/json",
-        Auth:token
+        Auth: token
       },
       withCredentials: true,
     });
@@ -182,19 +181,19 @@ setreload(!reload)
   }
 
   // get recipe by userId
-  const recipeByUser = async (id) =>{
+  const recipeByUser = async (id) => {
     const api = await axios.get(`${url}/user/${id}`, {
       headers: {
         "Content-Type": "application/json",
-        
+
       },
       withCredentials: true,
     });
     // console.log("user Specific recipe ",api)
     setuserRecipe(api.data.recipe)
   }
-  const logOut = () =>{
-    localStorage.removeItem("token",token)
+  const logOut = () => {
+    localStorage.removeItem("token", token)
     setToken("")
     setisAuthenticated(false)
   }

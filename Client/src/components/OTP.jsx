@@ -9,7 +9,7 @@ const OTP = () => {
 
     const verifyOtp = async () => {
         try {
-            const response = await axios.post("http://localhost:3000/api/verifyOTP", { sentOtp: otp, userId });
+            const response = await axios.post("https://recipe-server-sqbv.onrender.com/api/verifyOTP", { sentOtp: otp, userId });
             if (response.status === 200) {
                 navigate("/login");
             }
